@@ -3,12 +3,11 @@ version: '3.8'
 services:
   db:
     image: postgres:13
+    network_mode: host
     environment:
       POSTGRES_DB: lanchonete
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
-    ports:
-      - "5432:5432"
     volumes:
       - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql
     healthcheck:
@@ -19,12 +18,9 @@ services:
 
   app:
     build: .
-    ports:
-      - "8080:8080"
+    network_mode: host
+    extra_hosts:
+      - "db:127.0.0.1"
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/lanchonete
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres 
