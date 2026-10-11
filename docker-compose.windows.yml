@@ -1,24 +1,41 @@
-# Ambiente de teste alternativo, para execução local no Docker Desktop (Windows e macOS).
+# Ambiente de teste alternativo, para execução a partir de uma máquina Windows.
 #
 # Por que este arquivo existe:
 # o docker-compose.yml do repositório usa `network_mode: host` com `extra_hosts`,
 # combinação necessária no GitHub Codespaces, onde a rede interna do Docker não
-# atribuía IP ao container do banco (ver Plano de Teste, seção 4.2). Fora do Linux
-# o Docker recusa essa combinação, porque o modo host não aceita mapeamento
-# host-to-IP e não publica as portas do container no sistema operacional.
+# atribuía IP ao container do banco (ver Plano de Teste, seção 4.2). O modo host
+# é específico de Linux: não publica as portas do container no sistema
+# operacional hospedeiro e não aceita mapeamento host-to-IP fora do Linux.
 #
-# Aqui a rede é a bridge padrão do Compose: o container da aplicação resolve o
-# nome `db` pelo DNS interno, que é exatamente a URL que DaoUtil.java e
-# context.xml já esperam (jdbc:postgresql://db:5432/lanchonete). Nenhuma linha do
-# código de produção foi alterada.
+# Aqui a rede é a bridge padrão do Compose, com as portas publicadas. O container
+# da aplicação resolve o nome `db` pelo DNS interno do Compose, que é exatamente a
+# URL que DaoUtil.java e context.xml já esperam
+# (jdbc:postgresql://db:5432/lanchonete). Nenhuma linha do código de produção foi
+# alterada.
+#
+# Verificado em 11/10/2026 com Docker 27.5.1 e Compose v2.26.1 rodando dentro do
+# WSL2 (Windows 11), a partir de /mnt/c. Tomcat sobe e a aplicação responde 200.
+# Não foi testado com Docker Desktop.
 #
 # Uso:
 #   docker compose -f docker-compose.windows.yml up --build -d
 #   docker compose -f docker-compose.windows.yml logs -f app
 #   docker compose -f docker-compose.windows.yml down -v
 #
-# Aplicação:  http://localhost:8080
-# Banco:      psql via `docker compose -f docker-compose.windows.yml exec db psql -U postgres -d lanchonete`
+# Banco:
+#   docker compose -f docker-compose.windows.yml exec db psql -U postgres -d lanchonete
+#
+# Atenção ao endereço de acesso pelo navegador do Windows:
+# nem o modo host nem as portas publicadas aqui fizeram o encaminhamento de
+# localhost do WSL2 funcionar na máquina em que isto foi verificado — localhost:8080
+# no Windows não responde, embora responda dentro do WSL. Use o IP do WSL:
+#
+#   wsl -- bash -c "hostname -I"        # ex.: 172.17.53.3
+#   http://172.17.53.3:8080
+#
+# Esse IP muda a cada reinício do WSL. A alternativa permanente é ativar o modo de
+# rede espelhado, criando %USERPROFILE%\.wslconfig com [wsl2] networkingMode=mirrored
+# e rodando `wsl --shutdown` — o que derruba os containers e exige subir de novo.
 
 services:
   db:
