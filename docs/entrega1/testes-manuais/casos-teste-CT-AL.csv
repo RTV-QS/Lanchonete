@@ -2,11 +2,11 @@ ID,Título,Funcionalidade,Técnica,Oráculo,Pré-condições,Passos,Dados,Result
 CT-AL-01,Cadastro válido com todos os campos,Cadastro,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado,"1. Abrir /view/cadastro/cadastro.html.
 2. Preencher todos os campos do formulário de usuário e de endereço.
 3. Clicar em Cadastrar.
-4. Conferir a tabela de clientes (consulta 1 do roteiro).",usuario = ct01; senha = Senha123; nome = Leonardo; sobrenome = Vaz; telefone = 21999990001; rua = Rua A; numero = 100; bairro = Centro; cidade = Rio de Janeiro; estado = RJ; complemento = ap 101,"Alerta ""Usuário Cadastrado!"" e redirecionamento para a tela de login. No banco: um cliente ct01, com fg_ativo = 1, senha gravada como hash MD5 e id_endereco preenchido.",,,,
+4. Conferir a tabela de clientes (consulta 1 do roteiro).",usuario = ct01; senha = ct01; nome = ct01; sobrenome = test; telefone = 21999999999; rua = Rua CT01; numero = 1; bairro = Teste; cidade = Teste; estado = RJ; complemento = apto 101,"Alerta ""Usuário Cadastrado!"" e redirecionamento para a tela de login. No banco: um cliente ct01, com fg_ativo = 1, senha gravada como hash MD5 e id_endereco preenchido.",,,,
 CT-AL-02,Login logo após o cadastro,Login,Partição de equivalência,Código,Ambiente preparado; cliente ct01 criado no CT-AL-01,"1. Na tela de login, informar usuário e senha do CT-AL-01.
 2. Clicar em Entrar.
 3. Conferir os cookies no DevTools (F12, aba Application).
-4. Conferir a tabela de tokens (consulta 2).",usuario = ct01; senha = Senha123,"Redireciona para o carrinho. Um cookie token é criado, no formato <id_cliente>-<instante>, e a mesma string aparece em tb_tokens.",,,,
+4. Conferir a tabela de tokens (consulta 2).",usuario = ct01; senha = ct01,"Redireciona para o carrinho. Um cookie token é criado, no formato <id_cliente>-<instante>, e a mesma string aparece em tb_tokens.",,,,
 CT-AL-03,Cadastro com um campo obrigatório vazio,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
 2. Preencher todos os campos, menos o nome.
 3. Clicar em Cadastrar.",nome = (vazio); demais campos válidos; usuario = ct03,O formulário avisa que há campo obrigatório vazio e não envia a requisição. Nenhum cliente é criado. A função validar() do cadastro.js existe para isso.,,,,
@@ -23,7 +23,7 @@ CT-AL-06,Cadastro com usuário já existente,Cadastro,Partição de equivalênci
 4. Contar quantos clientes têm esse usuário (consulta 3).",usuario = ct01; senha = OutraSenha456; demais campos válidos,Mensagem informando que o usuário já existe. Nenhum cliente novo é criado: a consulta 3 continua devolvendo 1.,,,,
 CT-AL-07,Login do primeiro cadastro após a duplicação,Login,Transição de estado,Domínio,Ambiente preparado; CT-AL-06 executado,"1. Na tela de login, informar o usuário duplicado com a senha do PRIMEIRO cadastro (CT-AL-01).
 2. Clicar em Entrar.
-3. Repetir com a senha do SEGUNDO cadastro.",usuario = ct01; senha = Senha123,"O primeiro cliente continua conseguindo entrar com a própria senha, independentemente de quantos cadastros existam com esse usuário.",,,,
+3. Repetir com a senha do SEGUNDO cadastro.",usuario = ct01; senha = ct01 (a do primeiro cadastro),"O primeiro cliente continua conseguindo entrar com a própria senha, independentemente de quantos cadastros existam com esse usuário.",,,,
 CT-AL-08,Cadastro com senha só de espaços,Cadastro,Análise de valor limite,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
 2. Preencher tudo, com a senha contendo apenas espaços.
 3. Clicar em Cadastrar.
@@ -43,17 +43,22 @@ CT-AL-12,Login com usuário inexistente,Login,Partição de equivalência,Códig
 CT-AL-13,Login com os campos vazios,Login,Análise de valor limite,Código,Ambiente preparado,"1. Na tela de login, deixar os dois campos em branco.
 2. Clicar em Entrar.",usuario e senha vazios,"Alerta ""Digite as Informações!"" e nenhuma requisição enviada ao servidor (conferir na aba Network).",,,,
 CT-AL-14,Diferença de caixa no nome de usuário,Login,Análise de valor limite,Código,Ambiente preparado; cliente ct01 criado,"1. Na tela de login, informar o usuário em maiúsculas e a senha correta.
-2. Clicar em Entrar.",usuario = CT01; senha = Senha123,"Alerta de erro: a consulta no banco é sensível à caixa, então o usuário não é encontrado.",,,,
+2. Clicar em Entrar.",usuario = CT01 (maiúsculas); senha = ct01 (correta),"Alerta de erro: a consulta no banco é sensível à caixa, então o usuário não é encontrado.",,,,
 CT-AL-15,Diferença de caixa na senha,Login,Análise de valor limite,Código,Ambiente preparado; cliente ct01 criado,"1. Na tela de login, informar o usuário correto e a senha com a caixa trocada.
-2. Clicar em Entrar.",usuario = ct01; senha = senha123,Alerta de erro: a comparação do hash MD5 é sensível à caixa da senha original.,,,,
+2. Clicar em Entrar.",usuario = ct01 (correto); senha = CT01 (caixa trocada),Alerta de erro: a comparação do hash MD5 é sensível à caixa da senha original.,,,,
 CT-AL-16,Logout invalida a sessão,Login,Transição de estado,Domínio,Ambiente preparado; cliente ct01 logado,"1. Anotar o valor do cookie token (F12, aba Application).
 2. Clicar em Sair.
 3. Tentar voltar ao carrinho pelo botão Voltar do navegador e recarregar.
-4. Conferir se o token anotado ainda existe (consulta 4).",usuario = ct01,Redireciona para a tela de login e o token anotado não está mais em tb_tokens.,,,,
+4. Conferir se o token anotado ainda existe (consulta 4).",usuario = ct01; senha = ct01,Redireciona para a tela de login e o token anotado não está mais em tb_tokens.,,,,
 CT-AL-17,Tokens antigos continuam válidos após novo login,Login,Transição de estado,Domínio,Ambiente preparado; cliente ct01 cadastrado e deslogado,"1. Entrar como ct01 e anotar o valor do cookie token (token A).
 2. Sem sair, entrar de novo em outra aba e anotar o novo token (token B).
 3. Validar o token A.
 4. Sair usando o token A.
-5. Conferir quantos tokens existem em tb_tokens (consulta 4).",usuario = ct01; senha = Senha123,"Depois do logout, nenhuma sessão do cliente continua válida: o token A não autentica mais e o carrinho redireciona para o login.",,,,
+5. Conferir quantos tokens existem em tb_tokens (consulta 4).",usuario = ct01; senha = ct01,"Depois do logout, nenhuma sessão do cliente continua válida: o token A não autentica mais e o carrinho redireciona para o login.",,,,
 CT-AL-18,Acesso ao carrinho com cookie de token inventado,Login,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado (aba anônima),"1. Criar manualmente um cookie token com um valor inventado (F12, aba Application).
 2. Abrir /view/carrinho/carrinho.html.",token = 1-2026-10-11T12:00:00Z,Redireciona para a tela de login: o token não existe em tb_tokens e a validação falha.,,,,
+CT-AL-19,"Login informando um e-mail, como o rótulo do campo pede",Login,Partição de equivalência,Domínio,Ambiente preparado; cliente ct01 cadastrado (CT-AL-01),"1. Abrir /view/login/login.html.
+2. No primeiro campo, rotulado ""E-mail"", informar um endereço de e-mail.
+3. No campo de senha, informar a senha correta do cliente.
+4. Clicar em Entrar.
+5. Conferir, no formulário de cadastro, se existe algum campo de e-mail.",campo rotulado E-mail = ct01@teste.com; senha = ct01,"O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.",,,,
