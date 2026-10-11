@@ -1,0 +1,46 @@
+# Ambiente de teste alternativo, para execução local no Docker Desktop (Windows e macOS).
+#
+# Por que este arquivo existe:
+# o docker-compose.yml do repositório usa `network_mode: host` com `extra_hosts`,
+# combinação necessária no GitHub Codespaces, onde a rede interna do Docker não
+# atribuía IP ao container do banco (ver Plano de Teste, seção 4.2). Fora do Linux
+# o Docker recusa essa combinação, porque o modo host não aceita mapeamento
+# host-to-IP e não publica as portas do container no sistema operacional.
+#
+# Aqui a rede é a bridge padrão do Compose: o container da aplicação resolve o
+# nome `db` pelo DNS interno, que é exatamente a URL que DaoUtil.java e
+# context.xml já esperam (jdbc:postgresql://db:5432/lanchonete). Nenhuma linha do
+# código de produção foi alterada.
+#
+# Uso:
+#   docker compose -f docker-compose.windows.yml up --build -d
+#   docker compose -f docker-compose.windows.yml logs -f app
+#   docker compose -f docker-compose.windows.yml down -v
+#
+# Aplicação:  http://localhost:8080
+# Banco:      psql via `docker compose -f docker-compose.windows.yml exec db psql -U postgres -d lanchonete`
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: lanchonete
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
