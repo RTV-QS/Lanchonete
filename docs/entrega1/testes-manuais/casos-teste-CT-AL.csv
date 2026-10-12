@@ -14,9 +14,10 @@ CT-AL-04,Cadastro com todos os campos vazios,Cadastro,Análise de valor limite,D
 2. Não preencher nada.
 3. Clicar em Cadastrar.
 4. Conferir a tabela de clientes (consulta 1).",todos os campos vazios,O formulário bloqueia o envio e nenhum cliente é criado.,,,,
-CT-AL-05,Número do endereço não numérico,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
-2. Preencher tudo, com o número do endereço em texto.
-3. Clicar em Cadastrar.",numero = abc; demais campos válidos; usuario = ct05,Mensagem indicando que o número do endereço é inválido. Nenhum cliente é criado.,,,,
+CT-AL-05,Número do endereço acima do limite de um inteiro,Cadastro,Análise de valor limite,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
+2. Preencher todos os campos, com o número do endereço igual a 2147483647, que é o maior inteiro de 32 bits. Clicar em Cadastrar.
+3. Repetir o cadastro, com outro nome de usuário e o número igual a 2147483648, uma unidade acima do limite.
+4. Conferir a tabela de clientes (consulta 1 do roteiro).",usuario = ct05a com numero = 2147483647; usuario = ct05b com numero = 2147483648,"Os dois cadastros têm o mesmo desfecho: ou ambos são aceitos, ou ambos são recusados com mensagem indicando que o número do endereço é inválido. Em nenhum caso o sistema deve responder com erro interno. O campo é declarado type=number no formulário, então qualquer sequência de dígitos é uma entrada que o usuário consegue produzir.",,,,
 CT-AL-06,Cadastro com usuário já existente,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; cliente ct01 já criado no CT-AL-01,"1. Abrir o formulário de cadastro.
 2. Preencher com o mesmo usuário do CT-AL-01 e uma senha diferente.
 3. Clicar em Cadastrar.
