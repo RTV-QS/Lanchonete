@@ -173,8 +173,36 @@ SELECT COUNT(*) FROM tb_clientes WHERE usuario='';       ->  0
 
 `cadastro.java` lê `dados.getJSONObject("endereco").getInt("numero")` sem validar.
 Qualquer valor não inteiro — incluindo string vazia — lança `JSONException`, que
-não é tratada. Nenhum cliente é criado, o que é correto, mas o usuário recebe uma
-página de erro em HTML em vez de saber qual campo corrigir.
+não é tratada.
+
+**Correção a esta verificação, feita em 12/10/2026 após a execução pela
+interface.** As duas requisições acima não criaram cliente, mas a conclusão de
+que "nenhum cliente é criado" vale apenas para o caso em que `numero` não é
+inteiro: a exceção interrompe o processamento antes do insert. Quando `numero` é
+válido e os outros campos estão em branco, **o cliente é gravado com os campos
+vazios**. As colunas são `NOT NULL`, mas string vazia não é NULL, então a
+restrição do banco não barra nada.
+
+Estado de `tb_clientes` depois da execução dos casos pela interface, com os
+valores entre colchetes:
+
+```
+ id_cliente |  usuario  |  nome  | sobrenome |   telefone
+------------+-----------+--------+-----------+---------------
+         13 | [ct01]    | [ct01] | [test]    | [21999999999]
+         14 | [userfic] | []     | [sob]     | [21999994444]
+         15 | []        | [a]    | [a]       | [21999994433]
+         16 | [aaab]    | [aaa]  | [aaa]     | [aaa]
+```
+
+O cliente 14 tem nome vazio, o 15 tem nome de usuário vazio e o 16 tem `aaa`
+como telefone. O de id 15 é inacessível pela tela: `login.js` faz
+`if(usuario && senha)` e string vazia é *falsy*, então a requisição nunca sai.
+
+Vale registrar o contraste com a seção 6: lá a hipótese de "conta inacessível"
+foi refutada, porque `"   "` é *truthy* em JavaScript. Com string vazia, o mesmo
+raciocínio se confirma. A diferença entre os dois casos está exatamente no valor
+limite, que é o que a análise de valor limite existe para encontrar.
 
 ---
 
