@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cadastro e login do cliente">
-  <details><![CDATA[<p>Casos adicionais, encontrados durante a execucao dos casos CT-AL-01 a CT-AL-18. Responsavel: Leonardo Vaz.</p>]]></details>
+<testcases>
   <testcase name="CT-AL-19 - Login informando um e-mail, como o rótulo do campo pede">
     <summary><![CDATA[<p>Login informando um e-mail, como o rótulo do campo pede</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: campo rotulado E-mail = ct01@teste.com; senha = ct01</p>]]></summary>
     <preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 cadastrado (CT-AL-01)</p>]]></preconditions>
@@ -71,4 +70,4 @@
       </step>
     </steps>
   </testcase>
-</testsuite>
+</testcases>
