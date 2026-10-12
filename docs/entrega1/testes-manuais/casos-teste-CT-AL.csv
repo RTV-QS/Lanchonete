@@ -9,7 +9,7 @@ CT-AL-02,Login logo após o cadastro,Login,Partição de equivalência,Código,A
 4. Conferir a tabela de tokens (consulta 2).",usuario = ct01; senha = ct01,"Redireciona para o carrinho. Um cookie token é criado, no formato <id_cliente>-<instante>, e a mesma string aparece em tb_tokens.",,,,
 CT-AL-03,Cadastro com um campo obrigatório vazio,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
 2. Preencher todos os campos, menos o nome.
-3. Clicar em Cadastrar.",nome = (vazio); demais campos válidos; usuario = ct03,O formulário avisa que há campo obrigatório vazio e não envia a requisição. Nenhum cliente é criado. A função validar() do cadastro.js existe para isso.,,,,
+3. Clicar em Cadastrar.",usuario = userfic; nome = (vazio); sobrenome = sob; telefone = 21999994444; rua = aa; numero = 1; bairro/cidade/estado preenchidos,O formulário avisa que há campo obrigatório vazio e não envia a requisição. Nenhum cliente é criado. A função validar() do cadastro.js existe para isso.,,,,
 CT-AL-04,Cadastro com todos os campos vazios,Cadastro,Análise de valor limite,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
 2. Não preencher nada.
 3. Clicar em Cadastrar.
