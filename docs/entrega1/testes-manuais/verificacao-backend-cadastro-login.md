@@ -45,6 +45,8 @@ não há asserções versionadas e nada disso roda em CI. É investigação.
 | Senha só de espaços é aceita | **Confirmada**, com severidade menor que a prevista | #12 |
 | Senha de espaços cria conta inacessível pela tela | **Refutada** | — |
 | Senha do cliente é gravada sem hash | **Refutada**: a Lanchonete aplica MD5 | — |
+| Conexões com o banco nunca são fechadas, até esgotar o limite | **Confirmada** (achado durante a execução, ver adendo) | #14 |
+| Carrinho abre sem sessão quando a validação de sessão falha | **Confirmada** (achado durante a execução, ver adendo) | #15 |
 
 ---
 
@@ -243,3 +245,96 @@ O roteiro de requisições e consultas usado nesta verificação está em
 `.scratch/verificar-cadastro-login.sh`, fora do repositório por ser ferramenta de
 investigação e não artefato de teste. As consultas SQL de verificação estão
 documentadas no roteiro de execução dos casos CT-AL.
+
+---
+
+## Adendo — 11/10/2026, durante a execução do CT-AL-17
+
+Dois defeitos apareceram enquanto os casos manuais eram executados pela
+interface, fora do roteiro previsto. Ambos foram verificados aqui de forma
+controlada, e cobertos pelos casos novos CT-AL-20 e CT-AL-21.
+
+### 8. Conexões com o banco nunca são fechadas — issue #14
+
+`DaoUtil.conecta()` devolve uma conexão nova a cada chamada, e nenhuma classe DAO
+a fecha:
+
+```java
+public Connection conecta(){
+    Class.forName("org.postgresql.Driver");
+    return DriverManager.getConnection(url, usuario, senha);
+}
+```
+
+Cada DAO instanciado abre uma conexão que fica aberta para sempre. O login é o
+caminho mais caro, porque instancia dois DAOs (`DaoCliente` e `DaoToken`).
+
+Medição, com o banco recém-reiniciado:
+
+```
+conexões no início                       0
+após 10 requisições a /validarToken     10     (1 por requisição)
+após mais 10 requisições a /login       30     (2 por requisição)
+
+SELECT state, COUNT(*) FROM pg_stat_activity WHERE datname='lanchonete' GROUP BY state;
+ state | count
+-------+-------
+ idle  |    30
+```
+
+Todas em `idle`: abertas, sem uso e sem liberação. Com `max_connections = 100`,
+cerca de 50 logins esgotam o banco.
+
+Foi o que aconteceu de fato durante a execução dos casos manuais. A partir de
+certo ponto, qualquer requisição passou a responder:
+
+```
+org.postgresql.util.PSQLException: FATAL: sorry, too many clients already
+    DAO.DaoUtil.conecta(DaoUtil.java:21)
+    DAO.DaoToken.<init>(DaoToken.java:25)
+    Helpers.ValidadorCookie.validar(ValidadorCookie.java:22)
+    Controllers.validarToken.processRequest(validarToken.java:48)
+```
+
+Agravante: a aplicação se conecta como `postgres`, que é superusuário. As
+conexões vazadas ocupam também as vagas que o PostgreSQL reserva para
+administração (`superuser_reserved_connections`), de modo que nem o `psql`
+consegue mais entrar para diagnosticar. A recuperação exigiu reiniciar o
+container do banco.
+
+### 9. A validação de sessão falha aberta — issue #15
+
+Com o banco indisponível, `/validarToken` responde 500 com a página de erro
+padrão do Tomcat. E o guard do carrinho é este:
+
+```javascript
+// carrinho.js
+function check(resposta){
+    if(resposta.srcElement.responseText.includes("erro")){
+        window.location.replace("../login/login.html?Action=TokenError");
+    }
+}
+```
+
+A decisão de barrar o acesso depende de a resposta conter a string `"erro"`, em
+minúsculas. A página de erro do Tomcat está em inglês:
+
+```
+parando o container do banco
+POST /validarToken sem cookie  ->  HTTP 500
+ocorrências de "erro" na resposta:  0
+ocorrências de "Error" na resposta: 2
+```
+
+Zero ocorrências de `"erro"`, então o `if` é falso, não há redirecionamento e **o
+carrinho é exibido a um visitante sem nenhuma sessão**. Reproduzido em janela
+anônima, sem cookie algum.
+
+É o padrão oposto ao desejável em controle de acesso: diante de falha no
+mecanismo de autenticação, o sistema concede em vez de negar. E é o mesmo vício
+de estilo já observado no `login.js`, que decide sucesso com
+`responseText.localeCompare("erro") == -1` — as duas telas tomam decisão de
+segurança comparando texto do corpo da resposta, em vez de olhar o código HTTP.
+
+Os dois defeitos se combinam: o vazamento de conexões derruba o banco, e a queda
+do banco abre o carrinho para qualquer um.

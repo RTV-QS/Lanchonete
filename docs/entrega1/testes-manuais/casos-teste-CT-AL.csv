@@ -50,11 +50,13 @@ CT-AL-16,Logout invalida a sessão,Login,Transição de estado,Domínio,Ambiente
 2. Clicar em Sair.
 3. Tentar voltar ao carrinho pelo botão Voltar do navegador e recarregar.
 4. Conferir se o token anotado ainda existe (consulta 4).",usuario = ct01; senha = ct01,Redireciona para a tela de login e o token anotado não está mais em tb_tokens.,,,,
-CT-AL-17,Tokens antigos continuam válidos após novo login,Login,Transição de estado,Domínio,Ambiente preparado; cliente ct01 cadastrado e deslogado,"1. Entrar como ct01 e anotar o valor do cookie token (token A).
-2. Sem sair, entrar de novo em outra aba e anotar o novo token (token B).
-3. Validar o token A.
-4. Sair usando o token A.
-5. Conferir quantos tokens existem em tb_tokens (consulta 4).",usuario = ct01; senha = ct01,"Depois do logout, nenhuma sessão do cliente continua válida: o token A não autentica mais e o carrinho redireciona para o login.",,,,
+CT-AL-17,Tokens antigos continuam válidos após novo login,Login,Transição de estado,Domínio,Ambiente preparado; cliente ct01 cadastrado e logado,"1. Logado como ct01, abrir F12 > Application > Cookies e anotar o valor do cookie token (token A).
+2. Apagar SOMENTE a linha do cookie token. Nao clicar em Sair: apagar o cookie faz o navegador esquecer a sessao, enquanto o logout removeria o token do banco, que e justamente o que se quer observar.
+3. Entrar de novo como ct01, gerando o token B.
+4. Conferir quantos tokens existem em tb_tokens (consulta 2).
+5. Clicar em Sair, com o token B ativo.
+6. Conferir de novo quantos tokens restaram (consulta 2).
+7. Recriar manualmente o cookie token com o valor do token A e abrir /view/carrinho/carrinho.html.",usuario = ct01; senha = ct01,"Depois do logout, nenhuma sessão do cliente continua válida: o token A não autentica mais e o carrinho redireciona para o login.",,,,
 CT-AL-18,Acesso ao carrinho com cookie de token inventado,Login,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado (aba anônima),"1. Criar manualmente um cookie token com um valor inventado (F12, aba Application).
 2. Abrir /view/carrinho/carrinho.html.",token = 1-2026-10-11T12:00:00Z,Redireciona para a tela de login: o token não existe em tb_tokens e a validação falha.,,,,
 CT-AL-19,"Login informando um e-mail, como o rótulo do campo pede",Login,Partição de equivalência,Domínio,Ambiente preparado; cliente ct01 cadastrado (CT-AL-01),"1. Abrir /view/login/login.html.
@@ -62,3 +64,11 @@ CT-AL-19,"Login informando um e-mail, como o rótulo do campo pede",Login,Parti�
 3. No campo de senha, informar a senha correta do cliente.
 4. Clicar em Entrar.
 5. Conferir, no formulário de cadastro, se existe algum campo de e-mail.",campo rotulado E-mail = ct01@teste.com; senha = ct01,"O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.",,,,
+CT-AL-20,Conexões com o banco acumulam a cada requisição,Login,Análise de valor limite,Domínio,Ambiente preparado; cliente ct01 cadastrado; banco recém-reiniciado,"1. Contar as conexões abertas com o banco (consulta 6).
+2. Entrar e sair da aplicação cinco vezes seguidas, pela interface.
+3. Contar as conexões de novo (consulta 6).
+4. Esperar um minuto sem usar a aplicação e contar mais uma vez.",usuario = ct01; senha = ct01,"O número de conexões volta ao patamar inicial depois das operações, porque cada conexão é fechada ao fim do uso. O limite do PostgreSQL é 100 (max_connections), então o uso normal não pode consumi-lo progressivamente.",,,,
+CT-AL-21,Acesso ao carrinho quando a validação de sessão falha,Login,Partição de equivalência,Domínio,"Ambiente preparado; nenhum usuário logado (janela anônima, sem cookie token)","1. Parar o container do banco: docker compose -f docker-compose.windows.yml stop db
+2. Em uma janela anônima, abrir /view/carrinho/carrinho.html.
+3. Observar se a página redireciona para o login ou se o carrinho é exibido.
+4. Religar o banco: docker compose -f docker-compose.windows.yml start db",nenhum cookie de sessão,"A página redireciona para a tela de login. Falha na validação da sessão deve negar o acesso, nunca concedê-lo.",,,,
