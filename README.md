@@ -12,6 +12,7 @@
 > | Funcionalidade | Responsável | Artefatos |
 > | --- | --- | --- |
 > | Carrinho e finalização do pedido | Rafaella Lenzi | [relatório de execução](docs/entrega1/testes-manuais/TestPlanExecutionReportCarrinho.pdf) · [métricas](docs/entrega1/testes-manuais/GeneralTestPlanReportCarrinho.pdf) · [plano](docs/entrega1/testes-manuais/TestPlanReportCarrinho.pdf) · [casos (XML)](docs/entrega1/testes-manuais/testlink-carrinho.xml) |
+> | Consulta do cardápio | Thiago Moutinho | [relatório de execução](docs/entrega1/testes-manuais/TestPlanExecutionReportCardapio.pdf) · [métricas](docs/entrega1/testes-manuais/GeneralTestPlanReportCardapio.pdf) · [plano](docs/entrega1/testes-manuais/TestPlanReportCardapio.pdf) · [casos (XML)](docs/entrega1/testes-manuais/testlink-cardapio.xml) · [planilha CT-CM](docs/entrega1/testes-manuais/CT-CM_Cardapio_Thiago.xlsx) · [CSV](docs/entrega1/testes-manuais/casos-teste-CT-CM.csv) |
 > | Cadastro e login do cliente | Leonardo Vaz | [relatório de execução](docs/entrega1/testes-manuais/TestPlanExecutionReportCadastroLogin.pdf) · [métricas](docs/entrega1/testes-manuais/GeneralTestPlanReportCadastroLogin.pdf) · [plano](docs/entrega1/testes-manuais/TestPlanReportCadastroLogin.pdf) · [casos (XML)](docs/entrega1/testes-manuais/testlink-cadastro-login.xml) · [planilha CT-AL](docs/entrega1/testes-manuais/casos-teste-CT-AL.csv) · [verificação de backend](docs/entrega1/testes-manuais/verificacao-backend-cadastro-login.md) |
 >
 > [Defeitos reportados](https://github.com/RTV-QS/Lanchonete/issues) ·
