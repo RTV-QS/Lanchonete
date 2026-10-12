@@ -280,7 +280,15 @@ documentadas no roteiro de execução dos casos CT-AL.
 
 Dois defeitos apareceram enquanto os casos manuais eram executados pela
 interface, fora do roteiro previsto. Ambos foram verificados aqui de forma
-controlada, e cobertos pelos casos novos CT-AL-20 e CT-AL-21.
+controlada, por requisicao direta aos endpoints.
+
+Nenhum dos dois tem caso de teste manual correspondente. O do vazamento de
+conexoes exigiria contar conexoes antes e depois de varias operacoes, o que nao
+cabia no tempo disponivel. O da validacao de sessao chegou a ter um caso
+projetado, mas foi retirado porque o comportamento nao se reproduziu de forma
+confiavel pela interface, embora reproduza de forma deterministica no nivel HTTP,
+como registrado abaixo. Os dois sao reportados citando esta verificacao como
+evidencia, em vez de um caso de teste.
 
 ### 8. Conexões com o banco nunca são fechadas — issue #14
 
