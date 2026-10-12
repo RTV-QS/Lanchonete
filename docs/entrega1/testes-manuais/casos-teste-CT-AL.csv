@@ -1,0 +1,66 @@
+ID,Título,Funcionalidade,Técnica,Oráculo,Pré-condições,Passos,Dados,Resultado esperado,Resultado obtido (execução manual),Veredito,Issue,Evidência (TestLink)
+CT-AL-01,Cadastro válido com todos os campos,Cadastro,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado,"1. Abrir /view/cadastro/cadastro.html.
+2. Preencher todos os campos do formulário de usuário e de endereço.
+3. Clicar em Cadastrar.
+4. Conferir a tabela de clientes (consulta 1 do roteiro).",usuario = ct01; senha = ct01; nome = ct01; sobrenome = test; telefone = 21999999999; rua = Rua CT01; numero = 1; bairro = Teste; cidade = Teste; estado = RJ; complemento = apto 101,"Alerta ""Usuário Cadastrado!"" e redirecionamento para a tela de login. No banco: um cliente ct01, com fg_ativo = 1, senha gravada como hash MD5 e id_endereco preenchido.",Conforme o esperado,Passou,,TestLink LO-19
+CT-AL-02,Login logo após o cadastro,Login,Partição de equivalência,Código,Ambiente preparado; cliente ct01 criado no CT-AL-01,"1. Na tela de login, informar usuário e senha do CT-AL-01.
+2. Clicar em Entrar.
+3. Conferir os cookies no DevTools (F12, aba Application).
+4. Conferir a tabela de tokens (consulta 2).",usuario = ct01; senha = ct01,"Redireciona para o carrinho. Um cookie token é criado, no formato <id_cliente>-<instante>, e a mesma string aparece em tb_tokens.",Conforme o esperado,Passou,,TestLink LO-20
+CT-AL-03,Cadastro com um campo obrigatório vazio,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
+2. Preencher todos os campos, menos o nome.
+3. Clicar em Cadastrar.",usuario = userfic; nome = (vazio); sobrenome = sob; telefone = 21999994444; rua = aa; numero = 1; bairro/cidade/estado preenchidos,O formulário avisa que há campo obrigatório vazio e não envia a requisição. Nenhum cliente é criado. A função validar() do cadastro.js existe para isso.,"O formulário não exibiu nenhum aviso de campo obrigatório e enviou a requisição. O cliente foi criado com o campo nome vazio (id 14), em vez de ser recusado. As colunas são NOT NULL, mas string vazia não é NULL.",Falhou,Lanchonete#10,TestLink LO-21
+CT-AL-04,Cadastro com todos os campos vazios,Cadastro,Análise de valor limite,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
+2. Não preencher nada.
+3. Clicar em Cadastrar.
+4. Conferir a tabela de clientes (consulta 1).",todos os campos vazios,O formulário bloqueia o envio e nenhum cliente é criado.,"O formulário enviou a requisição sem avisar nenhum campo obrigatório; o servidor respondeu 500 (JSONException: JSONObject[""numero""] is not a int., cadastro.java:69), a tela exibiu o HTML do erro num alert e redirecionou para o login como se tivesse dado certo. Nenhum cliente foi criado, porque a exceção interrompe o processamento antes do insert.",Falhou,Lanchonete#10,TestLink LO-22
+CT-AL-05,Número do endereço não numérico,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
+2. Preencher tudo, com o número do endereço em texto.
+3. Clicar em Cadastrar.",numero = abc; demais campos válidos; usuario = ct05,Mensagem indicando que o número do endereço é inválido. Nenhum cliente é criado.,"O campo é declarado type=number no formulário, então o navegador não permite digitar texto: não foi possível produzir a entrada pela interface e nenhum cliente foi criado. A proteção vem do tipo do campo HTML, não de validação. Chamado diretamente, o endpoint aceita texto e responde 500 (ver relatório de verificação de backend).",Passou,,TestLink LO-23
+CT-AL-06,Cadastro com usuário já existente,Cadastro,Partição de equivalência,Domínio,Ambiente preparado; cliente ct01 já criado no CT-AL-01,"1. Abrir o formulário de cadastro.
+2. Preencher com o mesmo usuário do CT-AL-01 e uma senha diferente.
+3. Clicar em Cadastrar.
+4. Contar quantos clientes têm esse usuário (consulta 3).",usuario = ct01; senha = OutraSenha456; demais campos válidos,Mensagem informando que o usuário já existe. Nenhum cliente novo é criado: a consulta 3 continua devolvendo 1.,"O cadastro foi aceito com ""Usuário Cadastrado!"" mesmo com o usuário ct01 já existente. A consulta 3 passou a devolver ct01 com 2 registros (ids 13 e 19), com hashes de senha diferentes.",Falhou,Lanchonete#8,TestLink LO-24
+CT-AL-07,Login do primeiro cadastro após a duplicação,Login,Transição de estado,Domínio,Ambiente preparado; CT-AL-06 executado,"1. Na tela de login, informar o usuário duplicado com a senha do PRIMEIRO cadastro (CT-AL-01).
+2. Clicar em Entrar.
+3. Repetir com a senha do SEGUNDO cadastro.",usuario = ct01; senha = ct01 (a do primeiro cadastro),"O primeiro cliente continua conseguindo entrar com a própria senha, independentemente de quantos cadastros existam com esse usuário.","A senha do primeiro cadastro passou a ser recusada e a do segundo entrou. DaoCliente.login percorre todo o ResultSet e mantém apenas a última linha, então só o cadastro mais recente autentica: o dono original perde o acesso à própria conta.",Falhou,Lanchonete#8,TestLink LO-25
+CT-AL-08,Cadastro com senha só de espaços,Cadastro,Análise de valor limite,Domínio,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
+2. Preencher tudo, com a senha contendo apenas espaços.
+3. Clicar em Cadastrar.
+4. Em seguida, tentar entrar com esse usuário na tela de login.","usuario = ct08; senha = ""   "" (três espaços); demais campos válidos",O cadastro é recusado por senha inválida. Não deve existir conta protegida por uma senha em branco.,"O cadastro foi aceito e o cliente criado com o MD5 dos três espaços; o login com os mesmos espaços funciona. A hipótese de conta inacessível foi refutada: ""   "" é truthy em JavaScript e passa pelo if(usuario && senha) do login.js.",Falhou,Lanchonete#12,TestLink LO-26
+CT-AL-09,Cadastro de usuário com apóstrofo no nome de usuário,Cadastro,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado,"1. Abrir o formulário de cadastro.
+2. Preencher com um nome de usuário que contenha apóstrofo.
+3. Clicar em Cadastrar.
+4. Conferir a tabela de clientes (consulta 1).",usuario = o'brien; senha = Senha123; demais campos válidos,O cliente é criado normalmente: a gravação usa PreparedStatement e o apóstrofo é um caractere legítimo.,"Conforme o esperado: o cliente foi criado normalmente, porque a gravação usa PreparedStatement.",Passou,,TestLink LO-27
+CT-AL-10,Login do usuário com apóstrofo,Login,Partição de equivalência,Domínio,Ambiente preparado; cliente o'brien criado no CT-AL-09,"1. Na tela de login, informar o usuário com apóstrofo e a senha correta.
+2. Clicar em Entrar.
+3. Abrir o DevTools (F12), aba Network, e conferir o status e o corpo da resposta de /login.",usuario = o'brien; senha = Senha123,"Login bem-sucedido e redirecionamento para o carrinho, igual ao CT-AL-02.","500 com a página de erro do Tomcat. A autenticação passa, porque DaoCliente.login é parametrizado; a falha é no passo seguinte, DaoCliente.pesquisaPorUsuario, que monta o SQL por concatenação e quebra a sintaxe da consulta.",Falhou,Lanchonete#9,TestLink LO-28
+CT-AL-11,Login com senha incorreta,Login,Partição de equivalência,Código,Ambiente preparado; cliente ct01 criado,"1. Na tela de login, informar o usuário correto e uma senha errada.
+2. Clicar em Entrar.
+3. Conferir os cookies (F12, aba Application).",usuario = ct01; senha = SenhaErrada,Alerta de erro ao logar. Nenhum cookie token é criado e a página permanece no login.,Conforme o esperado,Passou,,TestLink LO-29
+CT-AL-12,Login com usuário inexistente,Login,Partição de equivalência,Código,Ambiente preparado,"1. Na tela de login, informar um usuário que não existe.
+2. Clicar em Entrar.",usuario = naoexiste; senha = Senha123,Alerta de erro ao logar. A página permanece no login.,Conforme o esperado,Passou,,TestLink LO-30
+CT-AL-13,Login com os campos vazios,Login,Análise de valor limite,Código,Ambiente preparado,"1. Na tela de login, deixar os dois campos em branco.
+2. Clicar em Entrar.",usuario e senha vazios,"Alerta ""Digite as Informações!"" e nenhuma requisição enviada ao servidor (conferir na aba Network).","Conforme o esperado: a validação do login (if(usuario && senha)) funciona, diferente da do cadastro.",Passou,,TestLink LO-31
+CT-AL-14,Diferença de caixa no nome de usuário,Login,Análise de valor limite,Código,Ambiente preparado; cliente ct01 criado,"1. Na tela de login, informar o usuário em maiúsculas e a senha correta.
+2. Clicar em Entrar.",usuario = CT01 (maiúsculas); senha = ct01 (correta),"Alerta de erro: a consulta no banco é sensível à caixa, então o usuário não é encontrado.",Conforme o esperado - possível melhoria: nomes de usuário normalmente não distinguem maiúsculas de minúsculas.,Passou,,TestLink LO-32
+CT-AL-15,Diferença de caixa na senha,Login,Análise de valor limite,Código,Ambiente preparado; cliente ct01 criado,"1. Na tela de login, informar o usuário correto e a senha com a caixa trocada.
+2. Clicar em Entrar.",usuario = ct01 (correto); senha = CT01 (caixa trocada),Alerta de erro: a comparação do hash MD5 é sensível à caixa da senha original.,Conforme o esperado,Passou,,TestLink LO-33
+CT-AL-16,Logout invalida a sessão,Login,Transição de estado,Domínio,Ambiente preparado; cliente ct01 logado,"1. Anotar o valor do cookie token (F12, aba Application).
+2. Clicar em Sair.
+3. Tentar voltar ao carrinho pelo botão Voltar do navegador e recarregar.
+4. Conferir se o token anotado ainda existe (consulta 4).",usuario = ct01; senha = ct01,Redireciona para a tela de login e o token anotado não está mais em tb_tokens.,Conforme o esperado: o token apresentado é removido e o botão Voltar leva à tela de login.,Passou,,TestLink LO-34
+CT-AL-17,Tokens antigos continuam válidos após novo login,Login,Transição de estado,Domínio,Ambiente preparado; cliente ct01 cadastrado e logado,"1. Logado como ct01, abrir F12 > Application > Cookies e anotar o valor do cookie token (token A).
+2. Apagar SOMENTE a linha do cookie token. Nao clicar em Sair: apagar o cookie faz o navegador esquecer a sessao, enquanto o logout removeria o token do banco, que e justamente o que se quer observar.
+3. Entrar de novo como ct01, gerando o token B.
+4. Conferir quantos tokens existem em tb_tokens (consulta 2).
+5. Clicar em Sair, com o token B ativo.
+6. Conferir de novo quantos tokens restaram (consulta 2).
+7. Recriar manualmente o cookie token com o valor do token A e abrir /view/carrinho/carrinho.html.",usuario = ct01; senha = ct01,"Depois do logout, nenhuma sessão do cliente continua válida: o token A não autentica mais e o carrinho redireciona para o login.","Dois logins geram dois tokens, e os dois ficam válidos ao mesmo tempo. O logout remove apenas o token enviado no cookie, deixando o outro ativo. Como tb_tokens não guarda data de emissão e o prazo de 30 minutos existe só no cookie, um token capturado continua valendo indefinidamente.",Falhou,Lanchonete#11,TestLink LO-35
+CT-AL-18,Acesso ao carrinho com cookie de token inventado,Login,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado (aba anônima),"1. Criar manualmente um cookie token com um valor inventado (F12, aba Application).
+2. Abrir /view/carrinho/carrinho.html.",token = 1-2026-10-11T12:00:00Z,Redireciona para a tela de login: o token não existe em tb_tokens e a validação falha.,Conforme o esperado,Passou,,TestLink LO-36
+CT-AL-19,"Login informando um e-mail, como o rótulo do campo pede",Login,Partição de equivalência,Domínio,Ambiente preparado; cliente ct01 cadastrado (CT-AL-01),"1. Abrir /view/login/login.html.
+2. No primeiro campo, rotulado ""E-mail"", informar um endereço de e-mail.
+3. No campo de senha, informar a senha correta do cliente.
+4. Clicar em Entrar.
+5. Conferir, no formulário de cadastro, se existe algum campo de e-mail.",campo rotulado E-mail = ct01@teste.com; senha = ct01,"O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.","O login é recusado. O campo rotulado E-mail não aceita um endereço de e-mail porque o sistema autentica por nome de usuário, e o formulário de cadastro não coleta e-mail em nenhum momento.",Falhou,Lanchonete#13,TestLink LO-37

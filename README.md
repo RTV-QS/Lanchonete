@@ -1,3 +1,27 @@
+> ## Trabalho de Qualidade de Software — Grupo RTV
+>
+> Este é o fork usado pelo grupo RTV (Rafaella Lenzi, Thiago Moutinho e Leonardo
+> Vaz) na disciplina COS482. O sistema é testado, não desenvolvido: o código de
+> produção não foi alterado, e as únicas mudanças são de teste e de ambiente.
+>
+> **Todos os artefatos da entrega estão indexados no README do outro fork do
+> grupo:** [RTV-QS/Adopet](https://github.com/RTV-QS/Adopet#readme)
+>
+> Artefatos que ficam neste repositório:
+>
+> | Funcionalidade | Responsável | Artefatos |
+> | --- | --- | --- |
+> | Carrinho e finalização do pedido | Rafaella Lenzi | [relatório de execução](docs/entrega1/testes-manuais/TestPlanExecutionReportCarrinho.pdf) · [métricas](docs/entrega1/testes-manuais/GeneralTestPlanReportCarrinho.pdf) · [plano](docs/entrega1/testes-manuais/TestPlanReportCarrinho.pdf) · [casos (XML)](docs/entrega1/testes-manuais/testlink-carrinho.xml) |
+> | Cadastro e login do cliente | Leonardo Vaz | [relatório de execução](docs/entrega1/testes-manuais/TestPlanExecutionReportCadastroLogin.pdf) · [métricas](docs/entrega1/testes-manuais/GeneralTestPlanReportCadastroLogin.pdf) · [plano](docs/entrega1/testes-manuais/TestPlanReportCadastroLogin.pdf) · [casos (XML)](docs/entrega1/testes-manuais/testlink-cadastro-login.xml) · [planilha CT-AL](docs/entrega1/testes-manuais/casos-teste-CT-AL.csv) · [verificação de backend](docs/entrega1/testes-manuais/verificacao-backend-cadastro-login.md) |
+>
+> [Defeitos reportados](https://github.com/RTV-QS/Lanchonete/issues) ·
+> [TestLink e ambiente](testlink/) ·
+> [Ambiente local no Windows](docker-compose.windows.yml)
+>
+> O texto abaixo é o README original do projeto.
+
+---
+
 # APS-04-Lanchonete-Online-em-Java
 
 ## Sobre

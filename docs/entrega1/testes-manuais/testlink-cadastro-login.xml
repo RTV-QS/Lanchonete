@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="82" name="Cadastro e login do cliente" >
+<node_order><![CDATA[2]]></node_order>
+<details><![CDATA[<p>Casos adicionais, encontrados durante a execucao dos casos CT-AL-01 a CT-AL-18. Responsavel: Leonardo Vaz.</p>]]></details> 
+
+<testcase internalid="83" name="CT-AL-01 - Cadastro válido com todos os campos">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[19]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Cadastro válido com todos os campos</p><p>Tecnica: Partição de equivalência. Oraculo: Código.</p><p>Dados: usuario = ct01; senha = Senha123; nome = Leonardo; sobrenome = Vaz; telefone = 21999990001; rua = Rua A; numero = 100; bairro = Centro; cidade = Rio de Janeiro; estado = RJ; complemento = ap 101</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir /view/cadastro/cadastro.html.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Preencher todos os campos do formulário de usuário e de endereço.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Conferir a tabela de clientes (consulta 1 do roteiro).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alerta "Usuário Cadastrado!" e redirecionamento para a tela de login. No banco: um cliente ct01, com fg_ativo = 1, senha gravada como hash MD5 e id_endereco preenchido.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="89" name="CT-AL-02 - Login logo após o cadastro">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[20]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login logo após o cadastro</p><p>Tecnica: Partição de equivalência. Oraculo: Código.</p><p>Dados: usuario = ct01; senha = Senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 criado no CT-AL-01</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar usuário e senha do CT-AL-01.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Conferir os cookies no DevTools (F12, aba Application).</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Conferir a tabela de tokens (consulta 2).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Redireciona para o carrinho. Um cookie token é criado, no formato &lt;id_cliente&gt;-&lt;instante&gt;, e a mesma string aparece em tb_tokens.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="95" name="CT-AL-03 - Cadastro com um campo obrigatório vazio">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[21]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Cadastro com um campo obrigatório vazio</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: nome = (vazio); demais campos válidos; usuario = ct03</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir o formulário de cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Preencher todos os campos, menos o nome.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>O formulário avisa que há campo obrigatório vazio e não envia a requisição. Nenhum cliente é criado. A função validar() do cadastro.js existe para isso.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="100" name="CT-AL-04 - Cadastro com todos os campos vazios">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[22]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Cadastro com todos os campos vazios</p><p>Tecnica: Análise de valor limite. Oraculo: Domínio.</p><p>Dados: todos os campos vazios</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir o formulário de cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Não preencher nada.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Conferir a tabela de clientes (consulta 1).</p>]]></actions>
+	<expectedresults><![CDATA[<p>O formulário bloqueia o envio e nenhum cliente é criado.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="106" name="CT-AL-05 - Número do endereço não numérico">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[23]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Número do endereço não numérico</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: numero = abc; demais campos válidos; usuario = ct05</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir o formulário de cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Preencher tudo, com o número do endereço em texto.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Mensagem indicando que o número do endereço é inválido. Nenhum cliente é criado.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="111" name="CT-AL-06 - Cadastro com usuário já existente">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[24]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Cadastro com usuário já existente</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: usuario = ct01; senha = OutraSenha456; demais campos válidos</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 já criado no CT-AL-01</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir o formulário de cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Preencher com o mesmo usuário do CT-AL-01 e uma senha diferente.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Contar quantos clientes têm esse usuário (consulta 3).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Mensagem informando que o usuário já existe. Nenhum cliente novo é criado: a consulta 3 continua devolvendo 1.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="117" name="CT-AL-07 - Login do primeiro cadastro após a duplicação">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[25]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login do primeiro cadastro após a duplicação</p><p>Tecnica: Transição de estado. Oraculo: Domínio.</p><p>Dados: usuario = ct01; senha = Senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; CT-AL-06 executado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar o usuário duplicado com a senha do PRIMEIRO cadastro (CT-AL-01).</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Repetir com a senha do SEGUNDO cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[<p>O primeiro cliente continua conseguindo entrar com a própria senha, independentemente de quantos cadastros existam com esse usuário.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="122" name="CT-AL-08 - Cadastro com senha só de espaços">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[26]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Cadastro com senha só de espaços</p><p>Tecnica: Análise de valor limite. Oraculo: Domínio.</p><p>Dados: usuario = ct08; senha = ""   "" (três espaços); demais campos válidos</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir o formulário de cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Preencher tudo, com a senha contendo apenas espaços.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Em seguida, tentar entrar com esse usuário na tela de login.</p>]]></actions>
+	<expectedresults><![CDATA[<p>O cadastro é recusado por senha inválida. Não deve existir conta protegida por uma senha em branco.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="128" name="CT-AL-09 - Cadastro de usuário com apóstrofo no nome de usuário">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[27]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Cadastro de usuário com apóstrofo no nome de usuário</p><p>Tecnica: Partição de equivalência. Oraculo: Código.</p><p>Dados: usuario = o'brien; senha = Senha123; demais campos válidos</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir o formulário de cadastro.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Preencher com um nome de usuário que contenha apóstrofo.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Clicar em Cadastrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Conferir a tabela de clientes (consulta 1).</p>]]></actions>
+	<expectedresults><![CDATA[<p>O cliente é criado normalmente: a gravação usa PreparedStatement e o apóstrofo é um caractere legítimo.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="134" name="CT-AL-10 - Login do usuário com apóstrofo">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[28]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login do usuário com apóstrofo</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: usuario = o'brien; senha = Senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente o'brien criado no CT-AL-09</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar o usuário com apóstrofo e a senha correta.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Abrir o DevTools (F12), aba Network, e conferir o status e o corpo da resposta de /login.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Login bem-sucedido e redirecionamento para o carrinho, igual ao CT-AL-02.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="139" name="CT-AL-11 - Login com senha incorreta">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[29]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login com senha incorreta</p><p>Tecnica: Partição de equivalência. Oraculo: Código.</p><p>Dados: usuario = ct01; senha = SenhaErrada</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 criado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar o usuário correto e uma senha errada.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Conferir os cookies (F12, aba Application).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alerta de erro ao logar. Nenhum cookie token é criado e a página permanece no login.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="144" name="CT-AL-12 - Login com usuário inexistente">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[30]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login com usuário inexistente</p><p>Tecnica: Partição de equivalência. Oraculo: Código.</p><p>Dados: usuario = naoexiste; senha = Senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar um usuário que não existe.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alerta de erro ao logar. A página permanece no login.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="148" name="CT-AL-13 - Login com os campos vazios">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[31]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login com os campos vazios</p><p>Tecnica: Análise de valor limite. Oraculo: Código.</p><p>Dados: usuario e senha vazios</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, deixar os dois campos em branco.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alerta "Digite as Informações!" e nenhuma requisição enviada ao servidor (conferir na aba Network).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="152" name="CT-AL-14 - Diferença de caixa no nome de usuário">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[32]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Diferença de caixa no nome de usuário</p><p>Tecnica: Análise de valor limite. Oraculo: Código.</p><p>Dados: usuario = CT01; senha = Senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 criado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar o usuário em maiúsculas e a senha correta.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alerta de erro: a consulta no banco é sensível à caixa, então o usuário não é encontrado.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="156" name="CT-AL-15 - Diferença de caixa na senha">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[33]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Diferença de caixa na senha</p><p>Tecnica: Análise de valor limite. Oraculo: Código.</p><p>Dados: usuario = ct01; senha = senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 criado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Na tela de login, informar o usuário correto e a senha com a caixa trocada.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Alerta de erro: a comparação do hash MD5 é sensível à caixa da senha original.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="160" name="CT-AL-16 - Logout invalida a sessão">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[34]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Logout invalida a sessão</p><p>Tecnica: Transição de estado. Oraculo: Domínio.</p><p>Dados: usuario = ct01</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 logado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Anotar o valor do cookie token (F12, aba Application).</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Clicar em Sair.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Tentar voltar ao carrinho pelo botão Voltar do navegador e recarregar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Conferir se o token anotado ainda existe (consulta 4).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Redireciona para a tela de login e o token anotado não está mais em tb_tokens.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="166" name="CT-AL-17 - Tokens antigos continuam válidos após novo login">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[35]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Tokens antigos continuam válidos após novo login</p><p>Tecnica: Transição de estado. Oraculo: Domínio.</p><p>Dados: usuario = ct01; senha = Senha123</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 cadastrado e deslogado</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Entrar como ct01 e anotar o valor do cookie token (token A).</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Sem sair, entrar de novo em outra aba e anotar o novo token (token B).</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Validar o token A.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Sair usando o token A.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[5]]></step_number>
+	<actions><![CDATA[<p>Conferir quantos tokens existem em tb_tokens (consulta 4).</p>]]></actions>
+	<expectedresults><![CDATA[<p>Depois do logout, nenhuma sessão do cliente continua válida: o token A não autentica mais e o carrinho redireciona para o login.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="173" name="CT-AL-18 - Acesso ao carrinho com cookie de token inventado">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[36]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Acesso ao carrinho com cookie de token inventado</p><p>Tecnica: Partição de equivalência. Oraculo: Código.</p><p>Dados: token = 1-2026-10-11T12:00:00Z</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado (aba anônima)</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Criar manualmente um cookie token com um valor inventado (F12, aba Application).</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Abrir /view/carrinho/carrinho.html.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Redireciona para a tela de login: o token não existe em tb_tokens e a validação falha.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+
+<testcase internalid="219" name="CT-AL-19 - Login informando um e-mail, como o rótulo do campo pede">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[37]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Login informando um e-mail, como o rótulo do campo pede</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: campo rotulado E-mail = ct01@teste.com; senha = ct01</p>]]></summary>
+	<preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 cadastrado (CT-AL-01)</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Abrir /view/login/login.html.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>No primeiro campo, rotulado "E-mail", informar um endereço de e-mail.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>No campo de senha, informar a senha correta do cliente.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+	<expectedresults><![CDATA[]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[5]]></step_number>
+	<actions><![CDATA[<p>Conferir, no formulário de cadastro, se existe algum campo de e-mail.</p>]]></actions>
+	<expectedresults><![CDATA[<p>O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+<platforms/>
+
+</testcase>
+</testsuite>
