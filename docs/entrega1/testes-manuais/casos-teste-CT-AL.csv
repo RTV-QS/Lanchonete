@@ -63,4 +63,4 @@ CT-AL-19,"Login informando um e-mail, como o rótulo do campo pede",Login,Parti�
 2. No primeiro campo, rotulado ""E-mail"", informar um endereço de e-mail.
 3. No campo de senha, informar a senha correta do cliente.
 4. Clicar em Entrar.
-5. Conferir, no formulário de cadastro, se existe algum campo de e-mail.",campo rotulado E-mail = ct01@teste.com; senha = ct01,"O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.",,,,
+5. Conferir, no formulário de cadastro, se existe algum campo de e-mail.",campo rotulado E-mail = ct01@teste.com; senha = ct01,"O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.","O login é recusado. O campo rotulado E-mail não aceita um endereço de e-mail porque o sistema autentica por nome de usuário, e o formulário de cadastro não coleta e-mail em nenhum momento.",Falhou,Lanchonete#13,TestLink LO-37
