@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cadastro e login do cliente">
+  <details><![CDATA[<p>Casos adicionais, encontrados durante a execucao dos casos CT-AL-01 a CT-AL-18. Responsavel: Leonardo Vaz.</p>]]></details>
+  <testcase name="CT-AL-19 - Login informando um e-mail, como o rótulo do campo pede">
+    <summary><![CDATA[<p>Login informando um e-mail, como o rótulo do campo pede</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: campo rotulado E-mail = ct01@teste.com; senha = ct01</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado; cliente ct01 cadastrado (CT-AL-01)</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[3]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Abrir /view/login/login.html.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>No primeiro campo, rotulado "E-mail", informar um endereço de e-mail.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>No campo de senha, informar a senha correta do cliente.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[4]]></step_number>
+        <actions><![CDATA[<p>Clicar em Entrar.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[5]]></step_number>
+        <actions><![CDATA[<p>Conferir, no formulário de cadastro, se existe algum campo de e-mail.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O rótulo do campo corresponde ao dado que o sistema aceita. Se a autenticação é por e-mail, o cadastro coleta e-mail e o login funciona; se é por nome de usuário, o campo é rotulado como Usuário.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-AL-20 - Acesso ao carrinho quando a validação de sessão falha">
+    <summary><![CDATA[<p>Acesso ao carrinho quando a validação de sessão falha</p><p>Tecnica: Partição de equivalência. Oraculo: Domínio.</p><p>Dados: nenhum cookie de sessão</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado (janela anônima, sem cookie token)</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[3]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Parar o container do banco: docker compose -f docker-compose.windows.yml stop db</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Em uma janela anônima, abrir /view/carrinho/carrinho.html.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Observar se a página redireciona para o login ou se o carrinho é exibido.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[4]]></step_number>
+        <actions><![CDATA[<p>Religar o banco: docker compose -f docker-compose.windows.yml start db</p>]]></actions>
+        <expectedresults><![CDATA[<p>A página redireciona para a tela de login. Falha na validação da sessão deve negar o acesso, nunca concedê-lo.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+</testsuite>
