@@ -1,3 +1,27 @@
+> ## Trabalho de Qualidade de Software — Grupo RTV
+>
+> Este fork é utilizado pelo grupo RTV (Rafaella Lenzi, Thiago Moutinho e
+> Leonardo Vaz) na disciplina COS482. O foco deste repositório é a execução dos
+> testes; o código de produção não foi alterado para a entrega. Os artefatos
+> produzidos pelo grupo estão organizados abaixo e também indexados no
+> [README do fork Adopet](https://github.com/RTV-QS/Adopet#readme).
+>
+> Artefatos que ficam neste repositório:
+>
+> | Funcionalidade | Responsável | Artefatos |
+> | --- | --- | --- |
+> | Carrinho e finalização do pedido | Rafaella Lenzi | [relatório de execução](docs/entrega1/testes-manuais/Carrinho/TestPlanExecutionReportCarrinho.pdf) · [métricas](docs/entrega1/testes-manuais/Carrinho/GeneralTestPlanReportCarrinho.pdf) · [plano](docs/entrega1/testes-manuais/Carrinho/TestPlanReportCarrinho.pdf) · [casos (XML)](docs/entrega1/testes-manuais/Carrinho/testlink-carrinho.xml) · [planilha CT-CR](docs/entrega1/testes-manuais/Carrinho/casos-teste-CT-CR.csv) |
+> | Consulta do cardápio | Thiago Moutinho | [relatório de execução](docs/entrega1/testes-manuais/Cardapio/TestPlanExecutionReportCardapio.pdf) · [métricas](docs/entrega1/testes-manuais/Cardapio/GeneralTestPlanReportCardapio.pdf) · [plano](docs/entrega1/testes-manuais/Cardapio/TestPlanReportCardapio.pdf) · [casos (XML)](docs/entrega1/testes-manuais/Cardapio/testlink-cardapio.xml) · [CSV](docs/entrega1/testes-manuais/Cardapio/casos-teste-CT-CM.csv) |
+> | Cadastro e login do cliente | Leonardo Vaz | [relatório de execução](docs/entrega1/testes-manuais/CadastroLogin/TestPlanExecutionReportCadastroLogin.pdf) · [métricas](docs/entrega1/testes-manuais/CadastroLogin/GeneralTestPlanReportCadastroLogin.pdf) · [plano](docs/entrega1/testes-manuais/CadastroLogin/TestPlanReportCadastroLogin.pdf) · [casos (XML)](docs/entrega1/testes-manuais/CadastroLogin/testlink-cadastro-login.xml) · [planilha CT-AL](docs/entrega1/testes-manuais/CadastroLogin/casos-teste-CT-AL.csv) · [verificação de backend](docs/entrega1/testes-manuais/CadastroLogin/verificacao-backend-cadastro-login.md) |
+>
+> [Defeitos reportados](https://github.com/RTV-QS/Lanchonete/issues) ·
+> [TestLink e ambiente](testlink/) ·
+> [Ambiente local no Windows](docker-compose.windows.yml)
+>
+> O texto abaixo é o README original do projeto.
+
+---
+
 # APS-04-Lanchonete-Online-em-Java
 
 ## Sobre

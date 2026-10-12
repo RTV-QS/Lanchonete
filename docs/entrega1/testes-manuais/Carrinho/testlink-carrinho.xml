@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Carrinho e finalização do pedido">
+  <details><![CDATA[<p>Casos de teste manuais da funcionalidade de carrinho e finalização do pedido da Lanchonete Online. Responsável: Rafaella Lenzi.</p>]]></details>
+  <testcase name="CT-CR-01 - Acesso ao carrinho sem login">
+    <summary><![CDATA[<p>Acesso ao carrinho sem login</p><p>Técnica: Partição de equivalência. Oráculo: Código.</p><p>Dados: -</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado; nenhum usuário logado (aba anônima)</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Acessar /view/carrinho/carrinho.html diretamente.</p>]]></actions>
+        <expectedresults><![CDATA[<p>Redireciona para a tela de login.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-02 - Carrinho com um lanche">
+    <summary><![CDATA[<p>Carrinho com um lanche</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>No menu, adicionar o X-Teste (R$ 10,00) ao carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Abrir o carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O carrinho lista o lanche com quantidade 1. Preço do item e total exibidos como R$ 10,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-03 - Aumentar a quantidade">
+    <summary><![CDATA[<p>Aumentar a quantidade</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>No carrinho, clicar em &quot;+&quot; duas vezes.</p>]]></actions>
+        <expectedresults><![CDATA[<p>Quantidade 3. Total R$ 30,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-04 - Diminuir a quantidade">
+    <summary><![CDATA[<p>Diminuir a quantidade</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 2</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;–&quot; uma vez.</p>]]></actions>
+        <expectedresults><![CDATA[<p>Quantidade 1. Total R$ 10,00. O item continua no carrinho.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-05 - Diminuir com quantidade 1 (remoção)">
+    <summary><![CDATA[<p>Diminuir com quantidade 1 (remoção)</p><p>Técnica: Análise de valor limite. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 1</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;–&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O item é removido do carrinho. Total R$ 0,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-06 - Carrinho com lanche e bebida">
+    <summary><![CDATA[<p>Carrinho com lanche e bebida</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00) e Suco Teste (R$ 5,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>No menu, adicionar o X-Teste (R$ 10,00) e a Suco Teste (R$ 5,00).</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Abrir o carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[<p>Os dois itens listados. Total R$ 15,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-07 - Finalizar pedido com um item">
+    <summary><![CDATA[<p>Finalizar pedido com um item</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 1</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;Método de pagamento&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Selecionar Crédito e Em casa.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;Finalizar&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[4]]></step_number>
+        <actions><![CDATA[<p>Consultar o pedido no banco (consulta 1 da aba Verificação da planilha).</p>]]></actions>
+        <expectedresults><![CDATA[<p>Mensagem de sucesso, carrinho esvaziado. No banco: pedido com valor_total 10.00 e o lanche vinculado com quantidade 1.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-08 - Finalizar pedido com quantidade maior que 1">
+    <summary><![CDATA[<p>Finalizar pedido com quantidade maior que 1</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00), quantidade 3</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;+&quot; duas vezes (quantidade 3).</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Avançar para o pagamento, selecionar Crédito e Em casa.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Finalizar.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[4]]></step_number>
+        <actions><![CDATA[<p>Consultar o pedido no banco (consulta 1).</p>]]></actions>
+        <expectedresults><![CDATA[<p>Mensagem de sucesso. No banco: valor_total 30.00 e o lanche vinculado com quantidade 3.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-09 - Finalizar com o carrinho vazio">
+    <summary><![CDATA[<p>Finalizar com o carrinho vazio</p><p>Técnica: Análise de valor limite. Oráculo: Domínio.</p><p>Dados: -</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; carrinho vazio</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Abrir o carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Avançar para o pagamento.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;Finalizar&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[4]]></step_number>
+        <actions><![CDATA[<p>Consultar a tabela de pedidos (consulta 2).</p>]]></actions>
+        <expectedresults><![CDATA[<p>O sistema impede a finalização e avisa que o carrinho está vazio. Nenhum pedido é criado.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-10 - Finalizar sem escolher pagamento e entrega">
+    <summary><![CDATA[<p>Finalizar sem escolher pagamento e entrega</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Avançar para o pagamento sem selecionar nenhuma opção.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;Finalizar&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O sistema exige a escolha da forma de pagamento e da entrega antes de finalizar.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-11 - Registro da forma de pagamento e entrega">
+    <summary><![CDATA[<p>Registro da forma de pagamento e entrega</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Selecionar Débito e No estabelecimento.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Finalizar.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Verificar no banco se as escolhas foram registradas (consulta 1).</p>]]></actions>
+        <expectedresults><![CDATA[<p>O pedido registra a forma de pagamento (Débito) e a forma de entrega (No estabelecimento).</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-12 - Recarregar a página após alterar a quantidade">
+    <summary><![CDATA[<p>Recarregar a página após alterar a quantidade</p><p>Técnica: Transição de estado. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;+&quot; duas vezes (quantidade 3).</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Recarregar a página (F5).</p>]]></actions>
+        <expectedresults><![CDATA[<p>O carrinho mantém quantidade 3 e total R$ 30,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-13 - Abrir o carrinho em outra aba">
+    <summary><![CDATA[<p>Abrir o carrinho em outra aba</p><p>Técnica: Transição de estado. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Copiar o endereço do carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Abrir em uma nova aba do mesmo navegador.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O carrinho da nova aba mostra o mesmo lanche.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-14 - Adicionar o mesmo lanche duas vezes pelo menu">
+    <summary><![CDATA[<p>Adicionar o mesmo lanche duas vezes pelo menu</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; carrinho vazio</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>No menu, adicionar o X-Teste (R$ 10,00).</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Adicionar o mesmo lanche de novo.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Abrir o carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O carrinho mostra o lanche com quantidade 2 e total R$ 20,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-15 - Lanchonete fecha antes da finalização">
+    <summary><![CDATA[<p>Lanchonete fecha antes da finalização</p><p>Técnica: Transição de estado. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho; outra aba logada como admin</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Na aba do admin, fechar a lanchonete.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Na aba do cliente, finalizar o pedido.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[3]]></step_number>
+        <actions><![CDATA[<p>Consultar a tabela de pedidos (consulta 2).</p>]]></actions>
+        <expectedresults><![CDATA[<p>O sistema recusa o pedido informando que a lanchonete está fechada. Nenhum pedido é criado.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-16 - Cancelar no carrinho">
+    <summary><![CDATA[<p>Cancelar no carrinho</p><p>Técnica: Transição de estado. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;Cancelar&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Voltar ao carrinho.</p>]]></actions>
+        <expectedresults><![CDATA[<p>Volta para o menu. Ao reabrir o carrinho, o lanche continua lá.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-17 - Voltar da tela de pagamento">
+    <summary><![CDATA[<p>Voltar da tela de pagamento</p><p>Técnica: Transição de estado. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 2</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Avançar para o pagamento.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Clicar em &quot;Voltar para os Pedidos&quot;.</p>]]></actions>
+        <expectedresults><![CDATA[<p>A lista de pedidos reaparece com quantidade 2 e total R$ 20,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+  <testcase name="CT-CR-18 - Resumo do pedido">
+    <summary><![CDATA[<p>Resumo do pedido</p><p>Técnica: Partição de equivalência. Oráculo: Domínio.</p><p>Dados: X-Teste (R$ 10,00) (2) e Suco Teste (R$ 5,00) (1)</p>]]></summary>
+    <preconditions><![CDATA[<p>Ambiente preparado (lanchonete aberta; X-Teste a R$ 10,00 e Suco Teste a R$ 5,00 cadastrados); cliente logado; X-Teste (R$ 10,00) com quantidade 2 e Suco Teste (R$ 5,00) com quantidade 1</p>]]></preconditions>
+    <execution_type><![CDATA[1]]></execution_type>
+    <importance><![CDATA[2]]></importance>
+    <steps>
+      <step>
+        <step_number><![CDATA[1]]></step_number>
+        <actions><![CDATA[<p>Avançar para o pagamento.</p>]]></actions>
+        <expectedresults><![CDATA[]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+      <step>
+        <step_number><![CDATA[2]]></step_number>
+        <actions><![CDATA[<p>Conferir o resumo do pedido.</p>]]></actions>
+        <expectedresults><![CDATA[<p>O resumo mostra cada item com quantidade e valor (2 × R$ 10,00 e 1 × R$ 5,00) e o total R$ 25,00.</p>]]></expectedresults>
+        <execution_type><![CDATA[1]]></execution_type>
+      </step>
+    </steps>
+  </testcase>
+</testsuite>

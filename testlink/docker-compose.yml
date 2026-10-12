@@ -1,0 +1,27 @@
+# Host networking for the same reason as the Lanchonete: in Codespaces the
+# default bridge network did not give containers a usable IP.
+services:
+  testlink-db:
+    image: mariadb:10.11
+    network_mode: host
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: testlink
+      MARIADB_USER: testlink
+      MARIADB_PASSWORD: testlink
+    volumes:
+      - testlink-db:/var/lib/mysql
+
+  testlink:
+    build: .
+    network_mode: host
+    depends_on:
+      - testlink-db
+    volumes:
+      - testlink-app:/var/www/html
+      - testlink-files:/var/testlink
+
+volumes:
+  testlink-db:
+  testlink-app:
+  testlink-files:
