@@ -4,7 +4,7 @@
 > Leonardo Vaz) na disciplina COS482. O foco deste repositório é a execução dos
 > testes; o código de produção não foi alterado para a entrega. Os artefatos
 > produzidos pelo grupo estão organizados abaixo e também indexados no
-> [README do fork Adopet](https://github.com/RTV-QS/Adopet#readme).
+> [README do fork Adopet](https://github.com/RTV-QS/Adopet#readme), ponto central do trabalho.
 >
 > Artefatos que ficam neste repositório:
 >
