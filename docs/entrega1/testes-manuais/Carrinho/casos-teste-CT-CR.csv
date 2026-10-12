@@ -1,0 +1,44 @@
+ID,Título,Técnica,Oráculo,Pré-condições,Passos,Dados,Resultado esperado,Resultado obtido,Veredito,Issue,Evidência
+CT-CR-01,Acesso ao carrinho sem login,Partição de equivalência,Código,Ambiente preparado; nenhum usuário logado (aba anônima),1. Acessar /view/carrinho/carrinho.html diretamente.,-,Redireciona para a tela de login.,Conforme o esperado,Passou,,TestLink LO-1
+CT-CR-02,Carrinho com um lanche,Partição de equivalência,Domínio,Ambiente preparado (aba Preparação); cliente logado,"1. No menu, adicionar o X-Teste (R$ 10,00) ao carrinho.
+2. Abrir o carrinho.","X-Teste (R$ 10,00)","O carrinho lista o lanche com quantidade 1. Preço do item e total exibidos como R$ 10,00.",Conforme o esperado,Passou,,TestLink LO-2
+CT-CR-03,Aumentar a quantidade,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. No carrinho, clicar em ""+"" duas vezes.","X-Teste (R$ 10,00)","Quantidade 3. Total R$ 30,00.",Conforme o esperado,Passou,,TestLink LO-3
+CT-CR-04,Diminuir a quantidade,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 2","1. Clicar em ""–"" uma vez.","X-Teste (R$ 10,00)","Quantidade 1. Total R$ 10,00. O item continua no carrinho.",Conforme o esperado,Passou,,TestLink LO-4
+CT-CR-05,Diminuir com quantidade 1 (remoção),Análise de valor limite,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 1","1. Clicar em ""–"".","X-Teste (R$ 10,00)","O item é removido do carrinho. Total R$ 0,00.",Conforme o esperado,Passou,,TestLink LO-5
+CT-CR-06,Carrinho com lanche e bebida,Partição de equivalência,Domínio,Ambiente preparado (aba Preparação); cliente logado,"1. No menu, adicionar o X-Teste (R$ 10,00) e a Suco Teste (R$ 5,00).
+2. Abrir o carrinho.","X-Teste (R$ 10,00) e Suco Teste (R$ 5,00)","Os dois itens listados. Total R$ 15,00.",Conforme o esperado,Passou,,TestLink LO-6
+CT-CR-07,Finalizar pedido com um item,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 1","1. Clicar em ""Método de pagamento"".
+2. Selecionar Crédito e Em casa.
+3. Clicar em ""Finalizar"".
+4. Consultar o pedido no banco (aba Verificação, consulta 1).","X-Teste (R$ 10,00)","Mensagem de sucesso, carrinho esvaziado. No banco: pedido com valor_total 10.00 e o lanche vinculado com quantidade 1.",Conforme o esperado,Passou,,TestLink LO-7
+CT-CR-08,Finalizar pedido com quantidade maior que 1,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. Clicar em ""+"" duas vezes (quantidade 3).
+2. Avançar para o pagamento, selecionar Crédito e Em casa.
+3. Finalizar.
+4. Consultar o pedido no banco (consulta 1).","X-Teste (R$ 10,00), quantidade 3",Mensagem de sucesso. No banco: valor_total 30.00 e o lanche vinculado com quantidade 3.,"Valor total incorreto: em vez de 30.00, o pedido foi salvo com valor_total 10.00 (lanche vinculado com quantidade 3).",Falhou,Lanchonete#1,TestLink LO-8; anexo 4.png
+CT-CR-09,Finalizar com o carrinho vazio,Análise de valor limite,Domínio,Ambiente preparado (aba Preparação); cliente logado; carrinho vazio,"1. Abrir o carrinho.
+2. Avançar para o pagamento.
+3. Clicar em ""Finalizar"".
+4. Consultar a tabela de pedidos (consulta 2).",-,O sistema impede a finalização e avisa que o carrinho está vazio. Nenhum pedido é criado.,Mensagem de sucesso: o pedido foi criado com o carrinho vazio.,Falhou,Lanchonete#2,TestLink LO-9; anexo 5.png
+CT-CR-10,Finalizar sem escolher pagamento e entrega,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. Avançar para o pagamento sem selecionar nenhuma opção.
+2. Clicar em ""Finalizar"".","X-Teste (R$ 10,00)",O sistema exige a escolha da forma de pagamento e da entrega antes de finalizar.,"O pedido foi salvo com sucesso sem forma de pagamento e de entrega, quando deveria dar erro.",Falhou,Lanchonete#3,TestLink LO-10
+CT-CR-11,Registro da forma de pagamento e entrega,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. Abrir o DevTools (F12), aba Network.
+2. Selecionar Débito e No estabelecimento.
+3. Finalizar.
+4. Na requisição comprar, conferir o Payload enviado.
+5. Verificar as colunas da tabela de pedidos (consulta 3).","X-Teste (R$ 10,00)",A forma de pagamento (Débito) e a de entrega (No estabelecimento) são enviadas ao servidor e registradas no pedido.,"Não existe coluna para forma de pagamento ou de entrega em tb_pedidos. Mesmo que a página enviasse as escolhas, o sistema não teria onde guardá-las.",Falhou,Lanchonete#3,TestLink LO-11; saída de \d tb_pedidos
+CT-CR-12,Recarregar a página após alterar a quantidade,Transição de estado,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. Clicar em ""+"" duas vezes (quantidade 3).
+2. Recarregar a página (F5).","X-Teste (R$ 10,00)","O carrinho mantém quantidade 3 e total R$ 30,00.","Após recarregar, o carrinho voltou para a quantidade 1.",Falhou,Lanchonete#4,TestLink LO-12
+CT-CR-13,Abrir o carrinho em outra aba,Transição de estado,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. Copiar o endereço do carrinho.
+2. Abrir em uma nova aba do mesmo navegador.","X-Teste (R$ 10,00)",O carrinho da nova aba mostra o mesmo lanche.,"Na aba nova, o carrinho fica vazio.",Falhou,Lanchonete#5,TestLink LO-13
+CT-CR-14,Adicionar o mesmo lanche duas vezes pelo menu,Partição de equivalência,Domínio,Ambiente preparado (aba Preparação); cliente logado; carrinho vazio,"1. No menu, adicionar o X-Teste (R$ 10,00).
+2. Adicionar o mesmo lanche de novo.
+3. Abrir o carrinho.","X-Teste (R$ 10,00)","O carrinho mostra o lanche com quantidade 2 e total R$ 20,00.",O carrinho continua com quantidade 1.,Falhou,Lanchonete#6,TestLink LO-14
+CT-CR-15,Lanchonete fecha antes da finalização,Transição de estado,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho; outra aba logada como admin","1. Na aba do admin, fechar a lanchonete.
+2. Na aba do cliente, finalizar o pedido.
+3. Consultar a tabela de pedidos (consulta 2).","X-Teste (R$ 10,00)",O sistema recusa o pedido informando que a lanchonete está fechada. Nenhum pedido é criado.,O pedido foi aceito com a lanchonete fechada. O aviso de lanchonete fechada só apareceu ao voltar para a página inicial.,Falhou,Lanchonete#7,TestLink LO-15
+CT-CR-16,Cancelar no carrinho,Transição de estado,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho","1. Clicar em ""Cancelar"".
+2. Voltar ao carrinho.","X-Teste (R$ 10,00)","Volta para o menu. Ao reabrir o carrinho, o lanche continua lá.",Conforme o esperado,Passou,,TestLink LO-16
+CT-CR-17,Voltar da tela de pagamento,Transição de estado,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) no carrinho com quantidade 2","1. Avançar para o pagamento.
+2. Clicar em ""Voltar para os Pedidos"".","X-Teste (R$ 10,00)","A lista de pedidos reaparece com quantidade 2 e total R$ 20,00.",Conforme o esperado,Passou,,TestLink LO-17
+CT-CR-18,Resumo do pedido,Partição de equivalência,Domínio,"Ambiente preparado (aba Preparação); cliente logado; X-Teste (R$ 10,00) com quantidade 2 e Suco Teste (R$ 5,00) com quantidade 1","1. Avançar para o pagamento.
+2. Conferir o resumo do pedido.","X-Teste (R$ 10,00) (2) e Suco Teste (R$ 5,00) (1)","O resumo mostra cada item com quantidade e valor (2 × R$ 10,00 e 1 × R$ 5,00) e o total R$ 25,00.",Conforme o esperado,Passou,,TestLink LO-18
