@@ -3,7 +3,7 @@
   <details>&lt;p&gt;Casos projetados a partir do commit e356ae4. Responsável: Thiago Moutinho. 12 casos executados e aprovados em 12/10/2026 no TestLink; plano Entrega 1 - Cardápio, build v1. Resultados documentados em TestPlanExecutionReportCardapio.pdf e GeneralTestPlanReportCardapio.pdf. Não inclui carrinho, login nem montagem de lanche personalizado.&lt;/p&gt;</details>
   <testcase name="CT-CM-01 - Lanches ativos com nome, descrição e preço corretos">
     <summary>&lt;p&gt;Técnica: Partição de equivalência. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: QA-TM-X1: Teste lanche um, 10.00; QA-TM-X2: Teste lanche dois, 12.50.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -23,7 +23,7 @@
   </testcase>
   <testcase name="CT-CM-02 - Lanche inativo não aparece no cardápio">
     <summary>&lt;p&gt;Técnica: Partição de equivalência. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: QA-TM-X0: fg_ativo=0.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -43,7 +43,7 @@
   </testcase>
   <testcase name="CT-CM-03 - Bebidas ativas com descrição, preço e tipo">
     <summary>&lt;p&gt;Técnica: Partição de equivalência. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: QA-TM-Suco: Teste suco, 5.00, suco; QA-TM-Refri: Teste refri, 7.50, refrigerante.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -63,7 +63,7 @@
   </testcase>
   <testcase name="CT-CM-04 - Bebida inativa não aparece no cardápio">
     <summary>&lt;p&gt;Técnica: Partição de equivalência. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: QA-TM-B0: fg_ativo=0.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -83,7 +83,7 @@
   </testcase>
   <testcase name="CT-CM-05 - Alternância Lanches, Bebidas e retorno a Lanches">
     <summary>&lt;p&gt;Técnica: Transição de estado. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: Estado inicial Lanches.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -109,7 +109,7 @@
   </testcase>
   <testcase name="CT-CM-06 - Categoria Porções informa Em Breve">
     <summary>&lt;p&gt;Técnica: Transição de estado. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: Porções não possui produtos implementados.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -129,7 +129,7 @@
   </testcase>
   <testcase name="CT-CM-07 - Ingredientes do primeiro lanche">
     <summary>&lt;p&gt;Técnica: Partição de equivalência. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: QA-TM-X1 vinculado a QA-TM-Pao e QA-TM-Queijo.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -149,7 +149,7 @@
   </testcase>
   <testcase name="CT-CM-08 - Ingredientes do segundo lanche não contaminam o primeiro">
     <summary>&lt;p&gt;Técnica: Transição de estado. Oráculo: Domínio.&lt;/p&gt;&lt;p&gt;Dados: X1: Pao e Queijo; X2: Queijo.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -169,7 +169,7 @@
   </testcase>
   <testcase name="CT-CM-09 - Consultas repetidas não duplicam ingredientes">
     <summary>&lt;p&gt;Técnica: Transição de estado. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: QA-TM-X1: dois ingredientes.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
@@ -189,7 +189,7 @@
   </testcase>
   <testcase name="CT-CM-10 - Recarregar restaura a descrição e não duplica cartões">
     <summary>&lt;p&gt;Técnica: Transição de estado. Oráculo: Código.&lt;/p&gt;&lt;p&gt;Dados: X1 descrição original Teste lanche um.&lt;/p&gt;</summary>
-    <preconditions>&lt;p&gt;Aplicação disponível; massa preparar-massa.sql aplicada uma vez em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
+    <preconditions>&lt;p&gt;Aplicação disponível; massa QA-TM preparada conforme os dados do caso em banco local exclusivo; loja ABERTO; navegador sem login; aguardar o carregamento dos cartões.&lt;/p&gt;</preconditions>
     <execution_type>1</execution_type>
     <importance>2</importance>
     <steps>
